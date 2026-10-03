@@ -1,0 +1,9 @@
+# Vite fingerprints these filenames, so a new build means a new URL.
+# Safe to cache forever.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Image filenames are stable, so these must stay replaceable.
+# One day, then revalidate.
+/images/*
+  Cache-Control: public, max-age=86400

@@ -18,9 +18,28 @@ npm run build        # typecheck + production build
 npm run typecheck    # types only
 ```
 
-No hosting config is committed yet. Vercel and Netlify both pick a Vite project
-up with no configuration; a `vercel.json` or `netlify.toml` with an SPA rewrite
-is the only thing to add when you choose one.
+## Deploy (Cloudflare Pages)
+
+In the Cloudflare dashboard: **Workers & Pages → Create → Pages → Connect to
+Git**, pick this repository, then:
+
+| Setting | Value |
+| --- | --- |
+| Framework preset | None (or Vite) |
+| Build command | `npm run build` |
+| Build output directory | `dist` |
+
+Nothing else to configure. Every push to `main` redeploys, and pull requests get
+their own preview URL.
+
+Three files in this repo do the rest:
+
+- `public/_redirects` — rewrites unknown paths to `index.html`. Without it a
+  hard refresh on `/ru` or `/es` returns 404, because routing happens in the
+  browser and those paths are not files on disk.
+- `public/_headers` — caches the fingerprinted `assets/` forever and images for
+  a day.
+- `.node-version` — pins the build to Node 20.
 
 ## What's built
 

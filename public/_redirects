@@ -1,0 +1,7 @@
+# Single-page app fallback.
+#
+# Routing happens in the browser, so /ru and /es are not real files on disk.
+# Without this line a hard refresh or a shared link to any path other than /
+# returns 404. The 200 status rewrites rather than redirects, so the URL the
+# visitor sees is preserved — which matters because the locale is read from it.
+/*    /index.html   200
