@@ -32,6 +32,11 @@ jobs:
       - run: npm run build
 
       - uses: actions/configure-pages@v5
+        with:
+          # Turn Pages on if it isn't already, instead of failing with
+          # "Get Pages site failed ... Not Found". Makes the workflow work
+          # on a fresh clone or fork without visiting repo settings first.
+          enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:
