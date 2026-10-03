@@ -1,25 +1,41 @@
 import { useLocale } from "@/i18n/LocaleContext";
 import { hero } from "@/content/home";
 import { asset } from "@/lib/asset";
+import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 import Kicker from "@/components/ui/Kicker";
 import Button from "@/components/ui/Button";
 
 export default function Hero() {
   const { t } = useLocale();
+  const reducedMotion = usePrefersReducedMotion();
 
   return (
     <section id="top" className="on-dark relative flex min-h-[560px] items-end overflow-hidden bg-scrim md:min-h-[700px]">
-      <img
-        src={asset(hero.image)}
-        alt={t(hero.alt)}
-        width={1600}
-        height={954}
-        fetchPriority="high"
-        decoding="async"
-        className="absolute inset-0 h-full w-full object-cover"
-      />
-      {/* Functional scrim for legibility, not decoration — and necessary
-          given the source photography is only 852px wide. */}
+      {reducedMotion ? (
+        /* Same frame the video opens on, held still. */
+        <img
+          src={asset(hero.poster)}
+          alt={t(hero.alt)}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      ) : (
+        <video
+          autoPlay
+          muted
+          playsInline
+          preload="metadata"
+          poster={asset(hero.poster)}
+          aria-label={t(hero.alt)}
+          className="absolute inset-0 h-full w-full object-cover"
+        >
+          {/* WebM first: browsers that support VP9 take the 1.2 MB file
+              rather than the 1.9 MB MP4. */}
+          <source src={asset(hero.videoWebm)} type="video/webm" />
+          <source src={asset(hero.videoMp4)} type="video/mp4" />
+        </video>
+      )}
+
+      {/* Functional scrim for legibility, not decoration. */}
       <div aria-hidden="true" className="absolute inset-0 bg-hero-scrim" />
 
       <div className="container-page relative pb-9 md:pb-[76px]">

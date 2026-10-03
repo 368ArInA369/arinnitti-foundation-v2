@@ -112,6 +112,18 @@ under the 3:1 large-text threshold. Noted so nobody re-derives it.
 - **Accessibility**: skip link, Escape closes the menu, labelled inputs, 44px
   tap targets, visible focus rings. All absent or broken on the live site.
 - **Images are WebP.** The eight used here went from ~11 MB to 1.2 MB (−89%).
+- **The hero is video.** A brand animation — a hand raising an orb that forms
+  into the sun wheel over a jungle sunrise. The 2560×1440 source was 11.3 MB at
+  19.6 Mbps; shipped as a 1.2 MB VP9 WebM with a 1.9 MB H.264 MP4 fallback,
+  audio stripped, plus a 0.2 MB poster.
+
+  It autoplays muted once and holds its final frame — it does not loop, because
+  the animation resolves to the logo and restarting from the sunrise reads as a
+  glitch. Add `loop` to the `<video>` in `src/components/sections/Hero.tsx` if
+  you want it cycling.
+
+  Visitors who have asked their system for reduced motion get the poster frame
+  instead, with no video element at all.
 
 ## Placeholders — do not invent these
 

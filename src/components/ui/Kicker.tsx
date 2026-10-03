@@ -22,7 +22,7 @@ export default function Kicker({
   return (
     <div className={`flex items-center gap-3.5 ${className}`}>
       <span aria-hidden="true" className={`h-px w-8 md:w-[46px] ${rule}`} />
-      <p className={`m-0 text-[10px] font-bold uppercase tracking-[0.26em] md:text-[11.5px] md:tracking-[0.3em] ${color}`}>
+      <p className={`m-0 text-[10px] font-bold uppercase tracking-[0.18em] md:text-[11.5px] md:tracking-[0.3em] ${color}`}>
         {children}
       </p>
     </div>

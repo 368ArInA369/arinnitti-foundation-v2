@@ -62,9 +62,16 @@ export default {
         "on-dark": "rgba(248, 245, 238, 0.16)",
       },
       backgroundImage: {
-        /* Functional scrim for legibility over photography, not decoration. */
+        /*
+         * Functional scrim for legibility, not decoration.
+         *
+         * Weighted a little heavier than a still photo would need: the hero is
+         * video, so brightness under the headline changes as the sun flare
+         * moves through the shot. This holds the text legible across every
+         * frame rather than only the first one.
+         */
         "hero-scrim":
-          "linear-gradient(to top, rgba(35,27,18,0.94) 2%, rgba(35,27,18,0.6) 45%, rgba(35,27,18,0.25) 100%)",
+          "linear-gradient(to top, rgba(35,27,18,0.95) 2%, rgba(35,27,18,0.70) 45%, rgba(35,27,18,0.34) 100%)",
       },
     },
   },

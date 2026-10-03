@@ -77,12 +77,20 @@ export const hero = {
   primaryCta: { en: "Support the work", ru: "Поддержать работу", es: "Apoya el trabajo" } as T,
   // new — RU/ES need native review
   secondaryCta: { en: "See the places", ru: "Посмотреть места", es: "Ver los lugares" } as T,
-  image: "/images/aerial.webp",
+  /*
+   * Hero footage. WebM is listed first so browsers that support VP9 take the
+   * smaller file; the MP4 is the fallback. The poster is the video's own first
+   * frame, so there is no visible jump when playback starts, and it is what
+   * visitors who prefer reduced motion see instead of the video.
+   */
+  videoWebm: "/video/hero.webm",
+  videoMp4: "/video/hero.mp4",
+  poster: "/images/hero-poster.webp",
   // new — RU/ES need native review
   alt: {
-    en: "Aerial view of Castillo del Sol, a hillside retreat surrounded by Costa Rican rainforest",
-    ru: "Вид с воздуха на Замок Солнца — ретрит на склоне холма в окружении тропического леса Коста-Рики",
-    es: "Vista aérea del Castillo del Sol, un retiro en la ladera rodeado de selva costarricense",
+    en: "A hand raised at sunrise over forested mountains, holding a glowing sphere that forms into the Arinnitti sun wheel",
+    ru: "Рука, поднятая на рассвете над лесистыми горами, держит светящуюся сферу, которая превращается в солнечное колесо Ариннитти",
+    es: "Una mano alzada al amanecer sobre montañas boscosas, sosteniendo una esfera luminosa que se convierte en la rueda solar de Arinnitti",
   } as T,
 };
 
