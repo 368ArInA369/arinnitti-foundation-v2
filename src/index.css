@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-bone font-sans text-body antialiased;
+  }
+
+  /* Visible keyboard focus everywhere. */
+  :focus-visible {
+    outline: 2px solid theme("colors.gold.deep");
+    outline-offset: 3px;
+  }
+
+  /* On dark bands the deep gold ring is too low-contrast; use champagne. */
+  .on-dark :focus-visible {
+    outline-color: theme("colors.gold.champagne");
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-container px-5 md:px-14;
+  }
+
+  /* Visually hidden, still reachable by keyboard and screen readers. */
+  .sr-only-focusable {
+    @apply absolute h-px w-px overflow-hidden whitespace-nowrap;
+    clip: rect(0, 0, 0, 0);
+  }
+  .sr-only-focusable:focus {
+    @apply static h-auto w-auto overflow-visible whitespace-normal;
+    clip: auto;
+  }
+}
