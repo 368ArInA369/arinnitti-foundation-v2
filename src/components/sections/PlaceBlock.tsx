@@ -1,5 +1,6 @@
 import { useLocale } from "@/i18n/LocaleContext";
 import type { PlaceContent } from "@/content/home";
+import { asset } from "@/lib/asset";
 import ArrowLink from "@/components/ui/ArrowLink";
 
 /**
@@ -15,7 +16,7 @@ export default function PlaceBlock({ place }: { place: PlaceContent }) {
   const media = (
     <div className="min-w-0 flex-[1_1_420px]">
       <img
-        src={place.image}
+        src={asset(place.image)}
         alt={t(place.alt)}
         width={1400}
         height={1050}

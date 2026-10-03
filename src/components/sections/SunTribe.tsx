@@ -1,5 +1,6 @@
 import { useLocale } from "@/i18n/LocaleContext";
 import { tribe } from "@/content/home";
+import { asset } from "@/lib/asset";
 import Kicker from "@/components/ui/Kicker";
 import ArrowLink from "@/components/ui/ArrowLink";
 
@@ -11,7 +12,7 @@ export default function SunTribe() {
       <div className="container-page flex flex-wrap items-center gap-8 py-14 md:gap-14 md:py-24">
         <div className="min-w-0 flex-[1_1_360px]">
           <img
-            src={tribe.image}
+            src={asset(tribe.image)}
             alt={t(tribe.alt)}
             width={1000}
             height={1442}

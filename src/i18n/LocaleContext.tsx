@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, type ReactNode } from "react";
 import { DEFAULT_LOCALE, LOCALE_META, LOCALES, type Locale, type T } from "./locales";
+import { basePath } from "@/lib/asset";
 
 interface LocaleContextValue {
   locale: Locale;
@@ -35,7 +36,7 @@ export function LocaleProvider({ locale, children }: { locale: Locale; children:
       const link = document.createElement("link");
       link.rel = "alternate";
       link.hreflang = LOCALE_META[code].htmlLang;
-      link.href = `${origin}/${code}${rest}`;
+      link.href = `${origin}${basePath}/${code}${rest}`;
       link.setAttribute("data-hreflang", "true");
       document.head.appendChild(link);
     }
@@ -43,7 +44,7 @@ export function LocaleProvider({ locale, children }: { locale: Locale; children:
     const fallback = document.createElement("link");
     fallback.rel = "alternate";
     fallback.hreflang = "x-default";
-    fallback.href = `${origin}/${DEFAULT_LOCALE}${rest}`;
+    fallback.href = `${origin}${basePath}/${DEFAULT_LOCALE}${rest}`;
     fallback.setAttribute("data-hreflang", "true");
     document.head.appendChild(fallback);
   }, [locale]);
@@ -60,8 +61,13 @@ export function LocaleProvider({ locale, children }: { locale: Locale; children:
   return <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>;
 }
 
+/** Drop the deploy base path and the locale segment, leaving the rest. */
 function stripLocale(pathname: string): string {
-  const segments = pathname.split("/").filter(Boolean);
+  let rest = pathname;
+  if (basePath && rest.startsWith(basePath)) {
+    rest = rest.slice(basePath.length);
+  }
+  const segments = rest.split("/").filter(Boolean);
   if (segments.length && (LOCALES as readonly string[]).includes(segments[0])) {
     segments.shift();
   }

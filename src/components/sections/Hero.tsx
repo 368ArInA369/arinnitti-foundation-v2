@@ -1,5 +1,6 @@
 import { useLocale } from "@/i18n/LocaleContext";
 import { hero } from "@/content/home";
+import { asset } from "@/lib/asset";
 import Kicker from "@/components/ui/Kicker";
 import Button from "@/components/ui/Button";
 
@@ -9,7 +10,7 @@ export default function Hero() {
   return (
     <section id="top" className="on-dark relative flex min-h-[560px] items-end overflow-hidden bg-scrim md:min-h-[700px]">
       <img
-        src={hero.image}
+        src={asset(hero.image)}
         alt={t(hero.alt)}
         width={1600}
         height={954}

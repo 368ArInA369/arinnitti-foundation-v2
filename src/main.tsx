@@ -6,7 +6,9 @@ import "./index.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
+    {/* basename carries the GitHub Pages subpath, so routes resolve as
+        /arinnitti-foundation-v2/ru rather than /ru. */}
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <App />
     </BrowserRouter>
   </StrictMode>,

@@ -18,44 +18,48 @@ npm run build        # typecheck + production build
 npm run typecheck    # types only
 ```
 
-## Deploy (Cloudflare)
+## Deploy (GitHub Pages)
 
-Connect the repository in the Cloudflare dashboard and set:
+Live at **https://368arina369.github.io/arinnitti-foundation-v2/**
 
-| Setting | Value |
-| --- | --- |
-| Build command | `npm run build` |
-| Deploy command | `npx wrangler deploy` |
+One-time setup, both in the repository's own settings:
 
-Every push to `main` redeploys.
+1. **Settings → General → Danger Zone → Change visibility → Public.**
+   GitHub Pages needs a public repo on the free plan.
+2. **Settings → Pages → Build and deployment → Source: GitHub Actions.**
 
-### Why `wrangler.jsonc` exists
+After that, every push to `main` builds and deploys through
+`.github/workflows/deploy.yml`. Watch it under the Actions tab.
 
-Without a Wrangler config file, `wrangler deploy` tries to auto-configure the
-project from its framework and fails on any Vite below 6:
+### What a subpath deploy requires
 
-```
-✘ [ERROR] The version of Vite used in the project ("5.4.21") cannot be
-  automatically configured. Please update the Vite version to at least "6.0.0"
-```
+Pages serves this from `/arinnitti-foundation-v2/`, not from the domain root,
+and it has no server-side rewrite rules. Four things follow from that:
 
-`wrangler.jsonc` makes that auto-detection unnecessary — Wrangler reads the
-config and uploads `./dist` as-is, so the Vite version stops mattering.
-Upgrading Vite instead would pull `@vitejs/plugin-react`, PostCSS and Tailwind
-along with it for no gain.
+- **`vite.config.ts`** sets `base` to `/arinnitti-foundation-v2/`, so built
+  asset URLs carry the prefix. Override it with `BASE_PATH=/` when deploying
+  somewhere that serves from root.
+- **`src/main.tsx`** passes that same base to the router's `basename`, so
+  `/arinnitti-foundation-v2/ru` resolves instead of 404ing.
+- **`src/lib/asset.ts`** prefixes images from `public/`. A bare
+  `/images/aerial.webp` would miss the subpath; `asset()` resolves it against
+  `import.meta.env.BASE_URL`. Use it for anything you add to `public/`.
+- **`scripts/spa-fallback.mjs`** copies `index.html` to `404.html` after each
+  build. Pages serves `404.html` for unmatched paths, so a direct hit on
+  `/ru` or `/es` boots the app and the router reads the real URL.
 
-It is an assets-only Worker: no `main` entry, no server code.
+  The response status is genuinely 404, which is fine for a comparison build
+  but would want a real host — or prerendering — if this ever became the
+  primary site.
 
-### Supporting files
+### Inert files kept for portability
 
-- `wrangler.jsonc` — `not_found_handling: "single-page-application"` serves
-  `index.html` for `/ru` and `/es`, which are routes in the browser, not files
-  on disk. Preserves the URL, which matters because the locale is read from it.
-- `public/_redirects` — the same fallback in Pages/Netlify syntax, so the
-  project stays portable to a static host.
-- `public/_headers` — caches the fingerprinted `assets/` indefinitely, images
-  for a day.
-- `.node-version` — pins the build to Node 20.
+`wrangler.jsonc`, `public/_redirects` and `public/_headers` do nothing on
+GitHub Pages. They are left in place so the project can move to Cloudflare,
+Netlify or your own server without redoing the routing work. If you move to a
+root-served host, set `BASE_PATH=/` at build time.
+
+`.node-version` pins the build to Node 20.
 
 ## What's built
 
