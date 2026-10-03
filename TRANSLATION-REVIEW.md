@@ -13,14 +13,16 @@ Each is marked `// new — RU/ES need native review` at its definition.
 
 ## Hero
 
+The headline is NOT in this list: `hero.title` is the Foundation's own
+slogan, reused verbatim in all three languages from the existing site.
+
 | English | Where |
 | --- | --- |
 | Puntarenas, Costa Rica · Est. [YEAR] | `hero.kicker` |
-| We are building paradise on a hillside. | `hero.title` |
-| Not as a metaphor. As ground, water, structures and a community of people who live there. | `hero.lead` |
+| Three places in Costa Rica — land, buildings and a community of people who live there. | `hero.lead` |
 | Support the work | `hero.primaryCta` |
 | See the places | `hero.secondaryCta` |
-| Aerial view of Castillo del Sol… | `hero.alt` |
+| A hand raised at sunrise… (video description) | `hero.alt` |
 
 ## Evidence band
 

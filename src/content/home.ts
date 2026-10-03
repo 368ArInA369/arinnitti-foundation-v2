@@ -61,17 +61,30 @@ export const hero = {
     ru: "Пунтаренас, Коста-Рика · Основан в [YEAR]",
     es: "Puntarenas, Costa Rica · Fundada en [YEAR]",
   } as T,
-  // new — RU/ES need native review
+  /*
+   * reused — this is the Foundation's own slogan, lifted from the existing
+   * site's approved copy. "HEAVEN ON EARTH" / "РАЙ НА ЗЕМЛЕ" /
+   * "EL CIELO EN LA TIERRA" and "One Paradise at a Time" / "Один Рай за раз" /
+   * "Un Paraíso a la vez" are both verbatim; only the comma joining them is new.
+   * Set in sentence case rather than the original's all-caps, to suit the
+   * display face at 92px.
+   *
+   * The gaps after the comma in `en` and `ru` are NON-BREAKING SPACES (U+00A0),
+   * invisible in an editor but load-bearing: they stop the line breaking
+   * between "one" and "paradise" (and "один"/"Рай"), which otherwise leaves a
+   * single orphaned word at the end of the first line. Spanish breaks at the
+   * comma on its own and needs none. Keep them if you edit this copy.
+   */
   title: {
-    en: "We are building paradise on a hillside.",
-    ru: "Мы строим рай на склоне холма.",
-    es: "Estamos construyendo el paraíso en una ladera.",
+    en: "Heaven on Earth, one paradise at a time",
+    ru: "Рай на Земле, один Рай за раз",
+    es: "El Cielo en la Tierra, un Paraíso a la vez",
   } as T,
   // new — RU/ES need native review
   lead: {
-    en: "Not as a metaphor. As ground, water, structures and a community of people who live there.",
-    ru: "Не как метафору. Как землю, воду, постройки и сообщество людей, которые там живут.",
-    es: "No como metáfora. Como tierra, agua, estructuras y una comunidad de personas que viven allí.",
+    en: "Three places in Costa Rica — land, buildings and a community of people who live there.",
+    ru: "Три места в Коста-Рике — земля, постройки и сообщество людей, которые там живут.",
+    es: "Tres lugares en Costa Rica — tierra, edificios y una comunidad de personas que viven allí.",
   } as T,
   // new — RU/ES need native review
   primaryCta: { en: "Support the work", ru: "Поддержать работу", es: "Apoya el trabajo" } as T,

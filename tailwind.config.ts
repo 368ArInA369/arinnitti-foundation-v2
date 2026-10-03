@@ -51,7 +51,7 @@ export default {
       },
       maxWidth: {
         container: "1280px",
-        hero: "13ch",
+        hero: "17ch",
         lead: "52ch",
         heading: "18ch",
       },
