@@ -5,10 +5,12 @@ export default function ArrowLink({
   children,
   href,
   tone = "deep",
+  external = false,
 }: {
   children: ReactNode;
   href: string;
   tone?: "deep" | "champagne";
+  external?: boolean;
 }) {
   const color = tone === "deep" ? "text-gold-deep" : "text-gold-champagne";
   const stroke = tone === "deep" ? "#8C5A10" : "#E8C98A";
@@ -16,21 +18,39 @@ export default function ArrowLink({
   return (
     <a
       href={href}
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       className={`group inline-flex items-center gap-2.5 text-[13.5px] font-bold uppercase tracking-[0.08em] no-underline md:text-sm ${color}`}
     >
       {children}
-      <svg
-        width="17"
-        height="11"
-        viewBox="0 0 17 11"
-        fill="none"
-        stroke={stroke}
-        strokeWidth="1.6"
-        aria-hidden="true"
-        className="transition-transform group-hover:translate-x-1"
-      >
-        <path d="M0 5.5h15M10.5 1l4.8 4.5-4.8 4.5" />
-      </svg>
+      {external ? (
+        /* Arrow turns diagonal to signal the link leaves the site. */
+        <svg
+          width="13"
+          height="13"
+          viewBox="0 0 14 14"
+          fill="none"
+          stroke={stroke}
+          strokeWidth="1.6"
+          aria-hidden="true"
+          className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        >
+          <path d="M3 11L11 3M4.5 3H11v6.5" />
+        </svg>
+      ) : (
+        <svg
+          width="17"
+          height="11"
+          viewBox="0 0 17 11"
+          fill="none"
+          stroke={stroke}
+          strokeWidth="1.6"
+          aria-hidden="true"
+          className="transition-transform group-hover:translate-x-1"
+        >
+          <path d="M0 5.5h15M10.5 1l4.8 4.5-4.8 4.5" />
+        </svg>
+      )}
+      {external && <span className="sr-only">(opens in a new tab)</span>}
     </a>
   );
 }

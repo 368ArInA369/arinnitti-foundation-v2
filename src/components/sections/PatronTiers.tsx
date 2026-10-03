@@ -56,13 +56,7 @@ export default function PatronTiers() {
           ))}
         </div>
 
-        <p className="m-0 text-[13px] text-muted md:text-sm">
-          {t(patrons.note)}{" "}
-          <a href="#footer" className="text-gold-deep underline underline-offset-[3px]">
-            {t(patrons.noteLink)}
-          </a>
-          .
-        </p>
+        <p className="m-0 text-[13px] text-muted md:text-sm">{t(patrons.note)}</p>
       </div>
     </section>
   );

@@ -14,7 +14,7 @@ export default function Footer() {
         <div className="mb-10 flex flex-wrap gap-10 md:mb-14 md:gap-12">
           <div className="min-w-0 flex-[1_1_290px]">
             <div className="mb-5 flex items-center gap-3 text-gold-champagne">
-              <Mark size={28} />
+              <Mark size={42} />
               <Wordmark inverse />
             </div>
             <p className="m-0 mb-[18px] text-[14.5px] leading-relaxed text-body-inverse">{t(footer.tagline)}</p>

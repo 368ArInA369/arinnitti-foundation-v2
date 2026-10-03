@@ -121,6 +121,13 @@ Text in `[SQUARE BRACKETS]` is a fact nobody has supplied:
 (registration) · `[COUNTRY]` · `[YEAR]` (founded) · `[X]` (hectares, people
 hosted, structures completed, % of donations to programmes)
 
+Plus the Quantum Cacao block: its eyebrow and description are placeholders in
+all three languages, and `image` is `null`. Its page at
+<https://crx.travel/ru/paradise/quantum-cacao> was unreachable from the
+environment this was built in, so nothing was transcribed and nothing invented.
+Until a photo exists the block renders a labelled placeholder panel rather than
+borrowing another place's image.
+
 They are left visible on purpose. The live site makes no verifiable claim
 anywhere — no registration, no governance, no financials, no impact figures —
 and that gap costs more donations than any visual choice in this repo.

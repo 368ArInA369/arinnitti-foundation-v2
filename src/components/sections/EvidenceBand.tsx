@@ -31,11 +31,7 @@ export default function EvidenceBand() {
         </div>
 
         <p className="m-0 mt-5 text-[13px] leading-relaxed text-muted md:mt-[30px] md:text-sm">
-          {t(evidence.registration)}{" "}
-          <a href="#footer" className="text-gold-deep underline underline-offset-[3px]">
-            {t(evidence.reportLink)}
-          </a>
-          .
+          {t(evidence.registration)}
         </p>
       </div>
     </section>

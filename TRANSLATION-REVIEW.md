@@ -27,7 +27,6 @@ Each is marked `// new — RU/ES need native review` at its definition.
 | English | Where |
 | --- | --- |
 | Registered as [LEGAL ENTITY NAME] in [COUNTRY], reg. no. [NUMBER]. | `evidence.registration` |
-| Read our annual report | `evidence.reportLink` |
 | hectares under stewardship | `evidence.stats[0]` |
 | people hosted since [YEAR] | `evidence.stats[1]` |
 | structures completed | `evidence.stats[2]` |
@@ -43,6 +42,7 @@ Each is marked `// new — RU/ES need native review` at its definition.
 | Visit the Ark | `places[0].cta` |
 | Eco-community retreat | `places[1].eyebrow` |
 | Tour the Castillo | `places[1].cta` |
+| Visit Quantum Cacao | `places[2].cta` |
 | (both image alt texts) | `places[*].alt` |
 
 ## Sun Tribe
@@ -60,7 +60,6 @@ Each is marked `// new — RU/ES need native review` at its definition.
 | Every gift becomes something you can stand in | `patrons.title` |
 | Give once or monthly, at any amount… | `patrons.lead` |
 | Payments handled by Stripe. | `patrons.note` |
-| See exactly where donations go | `patrons.noteLink` |
 | Give / Donate now | `tiers[0]` |
 | Golden Creator tier description | `tiers[1].description` |
 | Compare tiers | `tiers[1].cta` |
@@ -83,3 +82,15 @@ Each is marked `// new — RU/ES need native review` at its definition.
 `Golden Creator` and `Founding Guardian` are existing tier names from the
 Foundation's patron programme. The names themselves are reused; only their
 one-line descriptions here are new.
+
+## Quantum Cacao — not a translation problem
+
+`places[2]` is the third paradise. Its eyebrow and description are
+`[BRACKETED]` placeholders in all three languages, not machine translations:
+the source page at https://crx.travel/ru/paradise/quantum-cacao could not be
+reached from the environment this was built in, so nothing was transcribed and
+nothing was invented.
+
+Replace them with the real copy, and set `image` from `null` to a photograph.
+Until then the block renders a labelled placeholder panel rather than borrowing
+another place's photo.

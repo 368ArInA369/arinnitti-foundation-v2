@@ -35,8 +35,8 @@ export default function Header() {
     <header className="sticky top-0 z-30 border-b border-gold-rule bg-bone">
       <div className="container-page flex h-[66px] items-center justify-between gap-8 md:h-[82px]">
         <Link to={pathFor(locale)} className="flex shrink-0 items-center gap-2.5 text-gold-deep no-underline md:gap-3">
-          <Mark size={24} className="md:hidden" />
-          <Mark size={30} className="hidden md:block" />
+          <Mark size={30} className="md:hidden" />
+          <Mark size={38} className="hidden md:block" />
           <Wordmark />
         </Link>
 

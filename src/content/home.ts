@@ -24,9 +24,12 @@ export interface PlaceContent {
   eyebrow: T;
   description: T;
   cta: T;
-  image: string;
+  /** Null until a photograph of the place exists; renders a labelled placeholder. */
+  image: string | null;
   alt: T;
   reversed?: boolean;
+  /** External destination, opened in a new tab. Omit for an internal link. */
+  href?: string;
 }
 
 export interface TierContent {
@@ -92,8 +95,6 @@ export const evidence = {
     ru: "Зарегистрирован как [LEGAL ENTITY NAME] в [COUNTRY], рег. № [NUMBER].",
     es: "Registrada como [LEGAL ENTITY NAME] en [COUNTRY], núm. de registro [NUMBER].",
   } as T,
-  // new — RU/ES need native review
-  reportLink: { en: "Read our annual report", ru: "Годовой отчёт", es: "Leer el informe anual" } as T,
   // All figures are placeholders. Do not invent values.
   stats: [
     {
@@ -195,6 +196,38 @@ export const places: PlaceContent[] = [
     },
     reversed: true,
   },
+  {
+    numeral: "03",
+    /*
+     * The third paradise. Its own page lives at
+     * https://crx.travel/ru/paradise/quantum-cacao
+     *
+     * Everything bracketed below is a placeholder: that page could not be
+     * reached from the environment this was built in, so none of its copy has
+     * been transcribed and none has been invented. Replace the eyebrow and
+     * description with the real text, in all three languages, and set `image`
+     * to a photograph once one is available.
+     */
+    name: { en: "Quantum Cacao", ru: "Quantum Cacao", es: "Quantum Cacao" },
+    eyebrow: {
+      en: "[WHAT KIND OF PLACE]",
+      ru: "[ЧТО ЭТО ЗА МЕСТО]",
+      es: "[QUÉ TIPO DE LUGAR]",
+    },
+    description: {
+      en: "[One or two sentences on what Quantum Cacao is and what happens there — the same length as the two places above.]",
+      ru: "[Одно-два предложения о том, что такое Quantum Cacao и что там происходит — той же длины, что и описания выше.]",
+      es: "[Una o dos frases sobre qué es Quantum Cacao y qué ocurre allí — de la misma extensión que los lugares anteriores.]",
+    },
+    cta: { en: "Visit Quantum Cacao", ru: "Посетить Quantum Cacao", es: "Visitar Quantum Cacao" },
+    href: "https://crx.travel/ru/paradise/quantum-cacao",
+    image: null,
+    alt: {
+      en: "Quantum Cacao",
+      ru: "Quantum Cacao",
+      es: "Quantum Cacao",
+    },
+  },
 ];
 
 /* --------------------------------------------------------------- mission */
@@ -275,12 +308,6 @@ export const patrons = {
     en: "Payments handled by Stripe.",
     ru: "Платежи обрабатывает Stripe.",
     es: "Pagos gestionados por Stripe.",
-  } as T,
-  // new — RU/ES need native review
-  noteLink: {
-    en: "See exactly where donations go",
-    ru: "Куда именно идут пожертвования",
-    es: "Ver exactamente a dónde van las donaciones",
   } as T,
 };
 
@@ -375,8 +402,6 @@ export const footer = {
        */
       heading: { en: "Transparency", ru: "Прозрачность", es: "Transparencia" } as T,
       links: [
-        { label: { en: "Governance", ru: "Управление", es: "Gobernanza" }, href: "#footer" },
-        { label: { en: "Annual report", ru: "Годовой отчёт", es: "Informe anual" }, href: "#footer" },
         { label: { en: "Privacy policy", ru: "Политика конфиденциальности", es: "Política de privacidad" }, href: "#footer" },
         { label: { en: "Cookie policy", ru: "Политика cookie", es: "Política de cookies" }, href: "#footer" },
         { label: { en: "Terms", ru: "Условия", es: "Términos" }, href: "#footer" },

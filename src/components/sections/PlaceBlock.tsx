@@ -15,17 +15,33 @@ export default function PlaceBlock({ place }: { place: PlaceContent }) {
 
   const media = (
     <div className="min-w-0 flex-[1_1_420px]">
-      <img
-        src={asset(place.image)}
-        alt={t(place.alt)}
-        width={1400}
-        height={1050}
-        loading="lazy"
-        decoding="async"
-        className="h-[240px] w-full object-cover md:h-[400px]"
-      />
+      {place.image ? (
+        <img
+          src={asset(place.image)}
+          alt={t(place.alt)}
+          width={1400}
+          height={1050}
+          loading="lazy"
+          decoding="async"
+          className="h-[240px] w-full object-cover md:h-[400px]"
+        />
+      ) : (
+        /* Deliberate, labelled gap — not a broken image. Showing another
+           place's photograph here would misrepresent this one. */
+        <div
+          role="img"
+          aria-label={`Photograph of ${t(place.name)} not yet available`}
+          className="flex h-[240px] w-full items-center justify-center border border-dashed border-gold-faint bg-[#F2EDE2] px-6 md:h-[400px]"
+        >
+          <span className="text-center text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
+            [ Photograph of {t(place.name)} ]
+          </span>
+        </div>
+      )}
     </div>
   );
+
+  const external = Boolean(place.href);
 
   const copy = (
     <div className="min-w-0 flex-[1_1_380px]">
@@ -41,7 +57,9 @@ export default function PlaceBlock({ place }: { place: PlaceContent }) {
       <p className="m-0 mb-[18px] text-base leading-[1.64] text-body md:mb-[26px] md:text-[17px] md:leading-[1.66]">
         {t(place.description)}
       </p>
-      <ArrowLink href="#places">{t(place.cta)}</ArrowLink>
+      <ArrowLink href={place.href ?? "#places"} external={external}>
+        {t(place.cta)}
+      </ArrowLink>
     </div>
   );
 
