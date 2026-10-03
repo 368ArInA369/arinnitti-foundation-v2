@@ -1,0 +1,19 @@
+{
+  // Explicit Workers config for a static-assets-only deploy.
+  //
+  // Without this file, `wrangler deploy` tries to auto-configure the project
+  // from its framework and refuses on Vite below 6.0.0. With it, Wrangler just
+  // reads this config and uploads ./dist as-is, so the Vite version is
+  // irrelevant. There is no `main` entry: this Worker serves assets and runs
+  // no code of its own.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "arinnitti-foundation-v2",
+  "compatibility_date": "2026-10-03",
+  "assets": {
+    "directory": "./dist",
+    // Routing happens in the browser, so /ru and /es are not files on disk.
+    // This serves index.html for them instead of a 404, preserving the URL —
+    // which matters, because the active locale is read from it.
+    "not_found_handling": "single-page-application"
+  }
+}

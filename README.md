@@ -18,27 +18,43 @@ npm run build        # typecheck + production build
 npm run typecheck    # types only
 ```
 
-## Deploy (Cloudflare Pages)
+## Deploy (Cloudflare)
 
-In the Cloudflare dashboard: **Workers & Pages → Create → Pages → Connect to
-Git**, pick this repository, then:
+Connect the repository in the Cloudflare dashboard and set:
 
 | Setting | Value |
 | --- | --- |
-| Framework preset | None (or Vite) |
 | Build command | `npm run build` |
-| Build output directory | `dist` |
+| Deploy command | `npx wrangler deploy` |
 
-Nothing else to configure. Every push to `main` redeploys, and pull requests get
-their own preview URL.
+Every push to `main` redeploys.
 
-Three files in this repo do the rest:
+### Why `wrangler.jsonc` exists
 
-- `public/_redirects` — rewrites unknown paths to `index.html`. Without it a
-  hard refresh on `/ru` or `/es` returns 404, because routing happens in the
-  browser and those paths are not files on disk.
-- `public/_headers` — caches the fingerprinted `assets/` forever and images for
-  a day.
+Without a Wrangler config file, `wrangler deploy` tries to auto-configure the
+project from its framework and fails on any Vite below 6:
+
+```
+✘ [ERROR] The version of Vite used in the project ("5.4.21") cannot be
+  automatically configured. Please update the Vite version to at least "6.0.0"
+```
+
+`wrangler.jsonc` makes that auto-detection unnecessary — Wrangler reads the
+config and uploads `./dist` as-is, so the Vite version stops mattering.
+Upgrading Vite instead would pull `@vitejs/plugin-react`, PostCSS and Tailwind
+along with it for no gain.
+
+It is an assets-only Worker: no `main` entry, no server code.
+
+### Supporting files
+
+- `wrangler.jsonc` — `not_found_handling: "single-page-application"` serves
+  `index.html` for `/ru` and `/es`, which are routes in the browser, not files
+  on disk. Preserves the URL, which matters because the locale is read from it.
+- `public/_redirects` — the same fallback in Pages/Netlify syntax, so the
+  project stays portable to a static host.
+- `public/_headers` — caches the fingerprinted `assets/` indefinitely, images
+  for a day.
 - `.node-version` — pins the build to Node 20.
 
 ## What's built
