@@ -31,6 +31,11 @@ interface Props {
   className?: string;
 }
 
+/**
+ * `btn-shine` (see index.css) sweeps a band of light across the button on
+ * hover and keyboard focus. It is a decorative overlay with no pointer events
+ * and never changes the label or fill colours the contrast ratios above rely on.
+ */
 export default function Button({
   children,
   href,
@@ -43,7 +48,7 @@ export default function Button({
     <a
       href={href}
       className={[
-        "inline-flex items-center justify-center rounded-full text-[13.5px] font-bold uppercase tracking-[0.1em] no-underline transition-colors",
+        "btn-shine inline-flex items-center justify-center rounded-full text-[13.5px] font-bold uppercase tracking-[0.1em] no-underline transition duration-300 hover:-translate-y-0.5",
         VARIANTS[variant],
         SIZES[size],
         block ? "flex w-full" : "",

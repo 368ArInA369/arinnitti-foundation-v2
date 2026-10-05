@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useLocale } from "@/i18n/LocaleContext";
 import { LOCALES, LOCALE_META } from "@/i18n/locales";
 import { donate, nav } from "@/content/home";
+import { clamp, subscribeToScroll } from "@/lib/scroll";
+import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 import Mark from "@/components/ui/Mark";
 import Wordmark from "@/components/ui/Wordmark";
 
@@ -10,6 +12,29 @@ export default function Header() {
   const { locale, t, pathFor } = useLocale();
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleRef = useRef<HTMLButtonElement>(null);
+  const reducedMotion = usePrefersReducedMotion();
+
+  /*
+   * How far down the page the reader is, 0 to 1, published as `--page-p` on
+   * the root element. The gold line under the header grows with it and the
+   * sun-wheel mark turns with it. Skipped entirely for reduced motion.
+   */
+  useEffect(() => {
+    if (reducedMotion) return;
+    const root = document.documentElement;
+    let last = -1;
+    const unsubscribe = subscribeToScroll(() => {
+      const scrollable = root.scrollHeight - window.innerHeight;
+      const value = scrollable > 0 ? clamp(window.scrollY / scrollable) : 0;
+      if (Math.abs(value - last) < 0.0005) return undefined;
+      last = value;
+      return () => root.style.setProperty("--page-p", value.toFixed(4));
+    });
+    return () => {
+      unsubscribe();
+      root.style.removeProperty("--page-p");
+    };
+  }, [reducedMotion]);
 
   /* Escape closes the menu and returns focus to the toggle. */
   useEffect(() => {
@@ -35,8 +60,8 @@ export default function Header() {
     <header className="sticky top-0 z-30 border-b border-gold-rule bg-bone">
       <div className="container-page flex h-[66px] items-center justify-between gap-8 md:h-[82px]">
         <Link to={pathFor(locale)} className="flex shrink-0 items-center gap-2.5 text-gold-deep no-underline md:gap-3">
-          <Mark size={30} className="md:hidden" />
-          <Mark size={38} className="hidden md:block" />
+          <Mark size={30} className="page-spin md:hidden" />
+          <Mark size={38} className="page-spin hidden md:block" />
           <Wordmark />
         </Link>
 
@@ -106,6 +131,9 @@ export default function Header() {
           </button>
         </div>
       </div>
+
+      {/* Reading progress: a gold line along the header's lower edge. */}
+      {!reducedMotion && <div aria-hidden="true" className="page-progress" />}
 
       {menuOpen && (
         <div id="mobile-menu" className="border-t border-hairline bg-bone lg:hidden">

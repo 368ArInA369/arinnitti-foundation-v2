@@ -61,6 +61,13 @@ export default {
         "gold-faint": "rgba(140, 90, 16, 0.32)",
         "on-dark": "rgba(248, 245, 238, 0.16)",
       },
+      /* One slow turn every 48 seconds: the sun wheel, never a spinner. */
+      keyframes: {
+        "spin-slow": { to: { transform: "rotate(360deg)" } },
+      },
+      animation: {
+        "spin-slow": "spin-slow 48s linear infinite",
+      },
       backgroundImage: {
         /*
          * Functional scrim for legibility, not decoration.

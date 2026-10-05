@@ -107,6 +107,19 @@ export const hero = {
   } as T,
 };
 
+/*
+ * The slogan on its own, for the scrolling band between the places and the
+ * mission. reused — "HEAVEN ON EARTH" / "РАЙ НА ЗЕМЛЕ" / "EL CIELO EN LA TIERRA"
+ * are the Foundation's own words, the same ones the hero title opens with (see
+ * the note on `hero.title`); only the capitalisation differs. The band shows
+ * all three languages at once whichever one the page is in.
+ */
+export const slogan: T = {
+  en: "Heaven on Earth",
+  ru: "Рай на Земле",
+  es: "El Cielo en la Tierra",
+};
+
 /* -------------------------------------------------------------- evidence */
 
 export const evidence = {
