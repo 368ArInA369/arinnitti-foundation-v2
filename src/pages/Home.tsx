@@ -9,6 +9,8 @@ import Mission from "@/components/sections/Mission";
 import SunTribe from "@/components/sections/SunTribe";
 import PatronTiers from "@/components/sections/PatronTiers";
 import Kicker from "@/components/ui/Kicker";
+import SplitWords from "@/components/motion/SplitWords";
+import SloganMarquee from "@/components/motion/SloganMarquee";
 
 export default function Home() {
   const { t } = useLocale();
@@ -28,9 +30,11 @@ export default function Home() {
         <section id="places" className="bg-bone">
           <div className="container-page pb-6 pt-14 md:pb-10 md:pt-24">
             <Kicker className="mb-3.5 md:mb-[18px]">{t(placesHeading.kicker)}</Kicker>
-            <h2 className="m-0 max-w-heading font-display text-[36px] font-light leading-[1.08] tracking-[-0.015em] text-ink md:text-[54px]">
-              {t(placesHeading.title)}
-            </h2>
+            <SplitWords
+              as="h2"
+              text={t(placesHeading.title)}
+              className="m-0 block max-w-heading font-display text-[36px] font-light leading-[1.08] tracking-[-0.015em] text-ink md:text-[54px]"
+            />
           </div>
 
           {places.map((place) => (
@@ -40,6 +44,7 @@ export default function Home() {
           <div className="pb-8 md:pb-14" />
         </section>
 
+        <SloganMarquee />
         <Mission />
         <SunTribe />
         <PatronTiers />

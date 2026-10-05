@@ -125,6 +125,61 @@ under the 3:1 large-text threshold. Noted so nobody re-derives it.
   Visitors who have asked their system for reduced motion get the poster frame
   instead, with no video element at all.
 
+## Motion
+
+The page moves in one idea: a sunrise. Gold lines draw, words rise out of a
+mask, and light arrives as you scroll. Nothing loops except the sun wheel
+turning once every 48 seconds, and nothing plays that is not either triggered by
+scrolling or finished within two seconds of arriving.
+
+| Where | What it does |
+| --- | --- |
+| Header | A gold line along the bottom grows with how far down the page you are; the sun-wheel mark turns one and a half times over the whole page |
+| Hero | The headline rises word by word. The footage drifts and zooms as you scroll away while the copy lifts and fades. A thin line falls beside it |
+| Every kicker | The gold rule draws out, then the label follows |
+| Evidence band | Figures count up from zero once they are real numbers. `[X]` placeholders are left exactly as written |
+| Places | Each photograph wipes in from the side it sits on, settles from a zoom, then drifts against the scroll. The copy follows line by line |
+| Slogan band | "Heaven on Earth" in three languages, one row sliding left and one right with the scroll position |
+| Mission | A flower of life draws itself outward from the centre and turns as the band passes. The statement lights up word by word as you read it |
+| Sun Tribe | The portrait wipes in; the sun wheel turns slowly behind its corner |
+| Patron tiers | The cards rise in turn, amounts count up, and warm light follows the pointer across the card |
+| Buttons | A band of light crosses on hover and keyboard focus |
+
+### How it is built
+
+No animation library. Four small pieces carry all of it:
+
+- `src/lib/scroll.ts` — one scroll listener for the whole page, reading layout
+  first and writing styles second each frame. Components get a scroll value as
+  a CSS custom property (`--p`, `--hp`, `--page-p`), so scrolling never
+  re-renders React; the stylesheet turns the value into movement with `calc()`.
+- `src/lib/useInView.ts` — the entrance trigger.
+- `src/components/motion/` — `Reveal`, `SplitWords`, `ParallaxImage`,
+  `CountUp`, `ScrubText`, `SacredGeometry`, `SloganMarquee`.
+- The "Motion" block at the bottom of `src/index.css`. It is plain CSS outside
+  any `@layer` on purpose: some class names are assembled in code
+  (`reveal-${variant}`), which Tailwind's scanner cannot see, and a layered rule
+  would be purged as unused.
+
+### Reduced motion
+
+Visitors who ask their system for reduced motion get none of it. The components
+render plain elements with none of the classes that hide things, so nothing is
+ever left invisible for them. The hero shows its poster frame, as before. The
+check is read synchronously on first render, so there is no flash of the hidden
+starting state.
+
+### Two rules to keep when adding more
+
+1. **Never watch an element that is clipped to nothing.** An observer measures
+   the visible part of the element it watches. A `clip-path` wipe on that same
+   element means it never counts as visible, so it never reveals. Watch an outer
+   frame and wipe an inner layer, as `ParallaxImage` does.
+2. **Keep text readable at rest.** Words that light up with scroll never fall
+   below 30% opacity and are all fully lit before the paragraph leaves the
+   screen; the pointer spotlight on the patron cards is pale enough to keep the
+   muted labels above 4.5:1.
+
 ## Placeholders — do not invent these
 
 Text in `[SQUARE BRACKETS]` is a fact nobody has supplied:
